@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('test', { title: 'Express - Michel' });
 });
 
-module.exports = router;*/
+module.exports = router;
 
 var http = require('http'),
     fs = require('fs');
@@ -22,4 +22,13 @@ fs.readFile('michel-leonardo-lopez-avendao.rstudio.cloud.html', function (err, h
         response.write(html);  
         response.end();  
     }).listen(8000);
+});*/
+
+const express=require('express');
+const index=express();
+
+index.use(express.static(__dirname + '/routes'));
+
+const server=index.listen(8888, () => {
+  console.log('Servidor web iniciado');
 });
