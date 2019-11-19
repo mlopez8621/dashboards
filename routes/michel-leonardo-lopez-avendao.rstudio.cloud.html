@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- saved from url=(0096)https://michel-leonardo-lopez-avendao.rstudio.cloud/453b4d8a294d49adbae8255705952fea/p/287c0773/ -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[3.4.1];shiny[1.4.0];ionrangeslider[2.1.6];strftime[0.9.2];htmlwidgets[1.5.1];datatables-css[0.0.0];datatables-binding[0.10];crosstalk[1.0.0];bootstrap[3.4.1]</script>
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/json2-min.js.descarga"></script>
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/jquery.min.js.descarga"></script>
+<link href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/shiny.css" rel="stylesheet">
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/shiny.min.js.descarga"></script>
+<link href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/ion.rangeSlider.css" rel="stylesheet">
+<link href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/ion.rangeSlider.skinShiny.css" rel="stylesheet">
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/ion.rangeSlider.min.js.descarga"></script>
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/strftime-min.js.descarga"></script>
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/htmlwidgets.js.descarga"></script>
+<link href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/datatables-crosstalk.css" rel="stylesheet">
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/datatables.js.descarga"></script>
+<link href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/crosstalk.css" rel="stylesheet">
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/crosstalk.min.js.descarga"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/bootstrap.min.css" rel="stylesheet">
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/bootstrap.min.js.descarga"></script>
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/html5shiv.min.js.descarga"></script>
+<script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/respond.min.js.descarga"></script>  <style>
+                      /* Smaller font for preformatted text */
+                      pre, table.table {
+                      font-size: smaller;
+                      }
+                      body {
+                      min-height: 2000px;
+                      }
+                      .option-group {
+                      border: 1px solid #ccc;
+                      border-radius: 6px;
+                      padding: 0px 5px;
+                      margin: 5px -10px;
+                      background-color: #f5f5f5;
+                      }
+                      .option-header {
+                      color: #79d;
+                      text-transform: uppercase;
+                      margin-bottom: 5px;
+                      }
+                      </style>
+
+<link rel="stylesheet" type="text/css" href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/jquery.dataTables.min.css"><link rel="stylesheet" type="text/css" href="./michel-leonardo-lopez-avendao.rstudio.cloud_files/jquery.dataTables.extra.css"><script src="./michel-leonardo-lopez-avendao.rstudio.cloud_files/jquery.dataTables.min.js.descarga"></script></head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="option-group">
+          <div id="dataset" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline shiny-bound-input">
+            <label class="control-label" for="dataset">Data set</label>
+            <div class="shiny-options-group">
+              <label class="radio-inline">
+                <input type="radio" name="dataset" value="mtcars" checked="checked">
+                <span>mtcars</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="dataset" value="diamonds">
+                <span>diamonds</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="dataset" value="grid">
+                <span>grid</span>
+              </label>
+            </div>
+          </div>
+          <div id="plot_type" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline shiny-bound-input">
+            <label class="control-label" for="plot_type">Plot type</label>
+            <div class="shiny-options-group">
+              <label class="radio-inline">
+                <input type="radio" name="plot_type" value="base" checked="checked">
+                <span>base</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="plot_type" value="ggplot2">
+                <span>ggplot2</span>
+              </label>
+            </div>
+          </div>
+          <div data-display-if="input.plot_type === &#39;base&#39;" data-ns-prefix="">
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="plot_scaletype">Scale type</label>
+              <div>
+                <select id="plot_scaletype" class="form-control shiny-bound-input"><option value="normal" selected="">normal</option>
+<option value="log">log</option>
+<option value="x_factor">x factor</option>
+<option value="datetime">datetime</option></select>
+              </div>
+            </div>
+          </div>
+          <div data-display-if="input.plot_type === &#39;ggplot2&#39;" data-ns-prefix="" style="display: none;">
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="ggplot_scaletype">Scale type</label>
+              <div>
+                <select id="ggplot_scaletype" class="form-control shiny-bound-input"><option value="normal" selected="">normal</option>
+<option value="reverse">reverse (scale_*_reverse())</option>
+<option value="log10">log10 (scale_*_log10())</option>
+<option value="log2">log2 (scale_*_continuous( trans=log2_trans()))</option>
+<option value="log10_trans">log10 (coord_trans())</option>
+<option value="log2_trans">log2 (coord_trans())</option>
+<option value="coord_cartesian">coord_cartesian()</option>
+<option value="coord_flip">coord_flip()</option>
+<option value="coord_fixed">coord_fixed()</option>
+<option value="coord_polar">coord_polar() (doesn't work)</option>
+<option value="x_factor">x factor</option>
+<option value="datetime">date and time</option></select>
+              </div>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="ggplot_facet">Facet</label>
+              <div>
+                <select id="ggplot_facet" class="form-control shiny-bound-input"><option value="none" selected="">none</option>
+<option value="wrap">wrap</option>
+<option value="grid_x">grid x</option>
+<option value="grid_y">grid y</option>
+<option value="grid_xy">grid xy</option>
+<option value="grid_xy_free">grid xy free</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="option-group">
+          <div class="option-header">Example1</div>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="dblclick_delay">Delay</label>
+            <span class="irs js-irs-0 irs-with-grid"><span class="irs"><span class="irs-line" tabindex="0"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: visible;">100</span><span class="irs-max" style="visibility: visible;">1,000</span><span class="irs-from" style="visibility: hidden;">0</span><span class="irs-to" style="visibility: hidden;">0</span><span class="irs-single" style="left: 30.4957%;">400</span></span><span class="irs-grid" style="width: 92.6667%; left: 3.56667%;"><span class="irs-grid-pol" style="left: 0%"></span><span class="irs-grid-text js-grid-text-0" style="left: 0%; margin-left: -3.50522%;">100</span><span class="irs-grid-pol small" style="left: 7.4074074074074066%"></span><span class="irs-grid-pol small" style="left: 3.7037037037037033%"></span><span class="irs-grid-pol" style="left: 11.11111111111111%"></span><span class="irs-grid-text js-grid-text-1" style="left: 11.1111%; visibility: visible; margin-left: -3.50522%;">200</span><span class="irs-grid-pol small" style="left: 18.51851851851852%"></span><span class="irs-grid-pol small" style="left: 14.814814814814813%"></span><span class="irs-grid-pol" style="left: 22.22222222222222%"></span><span class="irs-grid-text js-grid-text-2" style="left: 22.2222%; visibility: visible; margin-left: -3.50522%;">300</span><span class="irs-grid-pol small" style="left: 29.629629629629626%"></span><span class="irs-grid-pol small" style="left: 25.925925925925924%"></span><span class="irs-grid-pol" style="left: 33.33333333333333%"></span><span class="irs-grid-text js-grid-text-3" style="left: 33.3333%; visibility: visible; margin-left: -3.50522%;">400</span><span class="irs-grid-pol small" style="left: 40.74074074074074%"></span><span class="irs-grid-pol small" style="left: 37.03703703703703%"></span><span class="irs-grid-pol" style="left: 44.44444444444444%"></span><span class="irs-grid-text js-grid-text-4" style="left: 44.4444%; margin-left: -3.50522%;">500</span><span class="irs-grid-pol small" style="left: 51.851851851851855%"></span><span class="irs-grid-pol small" style="left: 48.148148148148145%"></span><span class="irs-grid-pol" style="left: 55.55555555555556%"></span><span class="irs-grid-text js-grid-text-5" style="left: 55.5556%; visibility: visible; margin-left: -3.50522%;">600</span><span class="irs-grid-pol small" style="left: 62.962962962962955%"></span><span class="irs-grid-pol small" style="left: 59.25925925925926%"></span><span class="irs-grid-pol" style="left: 66.66666666666666%"></span><span class="irs-grid-text js-grid-text-6" style="left: 66.6667%; visibility: visible; margin-left: -3.50522%;">700</span><span class="irs-grid-pol small" style="left: 74.07407407407406%"></span><span class="irs-grid-pol small" style="left: 70.37037037037037%"></span><span class="irs-grid-pol" style="left: 77.77777777777777%"></span><span class="irs-grid-text js-grid-text-7" style="left: 77.7778%; visibility: visible; margin-left: -3.50522%;">800</span><span class="irs-grid-pol small" style="left: 85.18518518518518%"></span><span class="irs-grid-pol small" style="left: 81.48148148148148%"></span><span class="irs-grid-pol" style="left: 88.88888888888889%"></span><span class="irs-grid-text js-grid-text-8" style="left: 88.8889%; margin-left: -3.50522%;">900</span><span class="irs-grid-pol small" style="left: 96.29629629629629%"></span><span class="irs-grid-pol small" style="left: 92.5925925925926%"></span><span class="irs-grid-pol" style="left: 100%"></span><span class="irs-grid-text js-grid-text-9" style="left: 100%; visibility: visible; margin-left: -4.75522%;">1,000</span></span><span class="irs-bar" style="left: 3.66667%; width: 30.8889%;"></span><span class="irs-bar-edge"></span><span class="irs-shadow shadow-single" style="display: none;"></span><span class="irs-slider single" style="left: 30.8889%;"></span></span><input class="js-range-slider irs-hidden-input shiny-bound-input" id="dblclick_delay" data-min="100" data-max="1000" data-from="400" data-step="100" data-grid="true" data-grid-num="9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number" tabindex="-1" readonly="">
+          </div>
+        </div>
+        <div class="option-group">
+          <div class="option-header">Example2</div>
+          <div id="hover_policy" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline shiny-bound-input">
+            <label class="control-label" for="hover_policy">Input rate policy</label>
+            <div class="shiny-options-group">
+              <label class="radio-inline">
+                <input type="radio" name="hover_policy" value="debounce" checked="checked">
+                <span>debounce</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="hover_policy" value="throttle">
+                <span>throttle</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="hover_delay">Delay</label>
+            <span class="irs js-irs-1 irs-with-grid"><span class="irs"><span class="irs-line" tabindex="0"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: visible;">100</span><span class="irs-max" style="visibility: visible;">1,000</span><span class="irs-from" style="visibility: hidden;">0</span><span class="irs-to" style="visibility: hidden;">0</span><span class="irs-single" style="left: 9.90306%;">200</span></span><span class="irs-grid" style="width: 92.6667%; left: 3.56667%;"><span class="irs-grid-pol" style="left: 0%"></span><span class="irs-grid-text js-grid-text-0" style="left: 0%; margin-left: -3.50522%;">100</span><span class="irs-grid-pol small" style="left: 7.4074074074074066%"></span><span class="irs-grid-pol small" style="left: 3.7037037037037033%"></span><span class="irs-grid-pol" style="left: 11.11111111111111%"></span><span class="irs-grid-text js-grid-text-1" style="left: 11.1111%; visibility: visible; margin-left: -3.50522%;">200</span><span class="irs-grid-pol small" style="left: 18.51851851851852%"></span><span class="irs-grid-pol small" style="left: 14.814814814814813%"></span><span class="irs-grid-pol" style="left: 22.22222222222222%"></span><span class="irs-grid-text js-grid-text-2" style="left: 22.2222%; visibility: visible; margin-left: -3.50522%;">300</span><span class="irs-grid-pol small" style="left: 29.629629629629626%"></span><span class="irs-grid-pol small" style="left: 25.925925925925924%"></span><span class="irs-grid-pol" style="left: 33.33333333333333%"></span><span class="irs-grid-text js-grid-text-3" style="left: 33.3333%; visibility: visible; margin-left: -3.50522%;">400</span><span class="irs-grid-pol small" style="left: 40.74074074074074%"></span><span class="irs-grid-pol small" style="left: 37.03703703703703%"></span><span class="irs-grid-pol" style="left: 44.44444444444444%"></span><span class="irs-grid-text js-grid-text-4" style="left: 44.4444%; margin-left: -3.50522%;">500</span><span class="irs-grid-pol small" style="left: 51.851851851851855%"></span><span class="irs-grid-pol small" style="left: 48.148148148148145%"></span><span class="irs-grid-pol" style="left: 55.55555555555556%"></span><span class="irs-grid-text js-grid-text-5" style="left: 55.5556%; visibility: visible; margin-left: -3.50522%;">600</span><span class="irs-grid-pol small" style="left: 62.962962962962955%"></span><span class="irs-grid-pol small" style="left: 59.25925925925926%"></span><span class="irs-grid-pol" style="left: 66.66666666666666%"></span><span class="irs-grid-text js-grid-text-6" style="left: 66.6667%; visibility: visible; margin-left: -3.50522%;">700</span><span class="irs-grid-pol small" style="left: 74.07407407407406%"></span><span class="irs-grid-pol small" style="left: 70.37037037037037%"></span><span class="irs-grid-pol" style="left: 77.77777777777777%"></span><span class="irs-grid-text js-grid-text-7" style="left: 77.7778%; visibility: visible; margin-left: -3.50522%;">800</span><span class="irs-grid-pol small" style="left: 85.18518518518518%"></span><span class="irs-grid-pol small" style="left: 81.48148148148148%"></span><span class="irs-grid-pol" style="left: 88.88888888888889%"></span><span class="irs-grid-text js-grid-text-8" style="left: 88.8889%; margin-left: -3.50522%;">900</span><span class="irs-grid-pol small" style="left: 96.29629629629629%"></span><span class="irs-grid-pol small" style="left: 92.5925925925926%"></span><span class="irs-grid-pol" style="left: 100%"></span><span class="irs-grid-text js-grid-text-9" style="left: 100%; visibility: visible; margin-left: -4.75522%;">1,000</span></span><span class="irs-bar" style="left: 3.66667%; width: 10.2963%;"></span><span class="irs-bar-edge"></span><span class="irs-shadow shadow-single" style="display: none;"></span><span class="irs-slider single" style="left: 10.2963%;"></span></span><input class="js-range-slider irs-hidden-input shiny-bound-input" id="hover_delay" data-min="100" data-max="1000" data-from="200" data-step="100" data-grid="true" data-grid-num="9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number" tabindex="-1" readonly="">
+          </div>
+          <div class="form-group shiny-input-container">
+            <div class="checkbox">
+              <label>
+                <input id="hover_null_outside" type="checkbox" checked="checked" class="shiny-bound-input">
+                <span>NULL when outside</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="option-group">
+          <div class="option-header">Example3</div>
+          <div id="brush_dir" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline shiny-bound-input">
+            <label class="control-label" for="brush_dir">Direction(s)</label>
+            <div class="shiny-options-group">
+              <label class="radio-inline">
+                <input type="radio" name="brush_dir" value="xy" checked="checked">
+                <span>xy</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="brush_dir" value="x">
+                <span>x</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="brush_dir" value="y">
+                <span>y</span>
+              </label>
+            </div>
+          </div>
+          <div id="brush_policy" class="form-group shiny-input-radiogroup shiny-input-container shiny-input-container-inline shiny-bound-input">
+            <label class="control-label" for="brush_policy">Input rate policy</label>
+            <div class="shiny-options-group">
+              <label class="radio-inline">
+                <input type="radio" name="brush_policy" value="debounce" checked="checked">
+                <span>debounce</span>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="brush_policy" value="throttle">
+                <span>throttle</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="brush_delay">Delay</label>
+            <span class="irs js-irs-2 irs-with-grid"><span class="irs"><span class="irs-line" tabindex="0"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: visible;">100</span><span class="irs-max" style="visibility: visible;">1,000</span><span class="irs-from" style="visibility: hidden;">0</span><span class="irs-to" style="visibility: hidden;">0</span><span class="irs-single" style="left: 9.90306%;">200</span></span><span class="irs-grid" style="width: 92.6667%; left: 3.56667%;"><span class="irs-grid-pol" style="left: 0%"></span><span class="irs-grid-text js-grid-text-0" style="left: 0%; margin-left: -3.50522%;">100</span><span class="irs-grid-pol small" style="left: 7.4074074074074066%"></span><span class="irs-grid-pol small" style="left: 3.7037037037037033%"></span><span class="irs-grid-pol" style="left: 11.11111111111111%"></span><span class="irs-grid-text js-grid-text-1" style="left: 11.1111%; visibility: visible; margin-left: -3.50522%;">200</span><span class="irs-grid-pol small" style="left: 18.51851851851852%"></span><span class="irs-grid-pol small" style="left: 14.814814814814813%"></span><span class="irs-grid-pol" style="left: 22.22222222222222%"></span><span class="irs-grid-text js-grid-text-2" style="left: 22.2222%; visibility: visible; margin-left: -3.50522%;">300</span><span class="irs-grid-pol small" style="left: 29.629629629629626%"></span><span class="irs-grid-pol small" style="left: 25.925925925925924%"></span><span class="irs-grid-pol" style="left: 33.33333333333333%"></span><span class="irs-grid-text js-grid-text-3" style="left: 33.3333%; visibility: visible; margin-left: -3.50522%;">400</span><span class="irs-grid-pol small" style="left: 40.74074074074074%"></span><span class="irs-grid-pol small" style="left: 37.03703703703703%"></span><span class="irs-grid-pol" style="left: 44.44444444444444%"></span><span class="irs-grid-text js-grid-text-4" style="left: 44.4444%; margin-left: -3.50522%;">500</span><span class="irs-grid-pol small" style="left: 51.851851851851855%"></span><span class="irs-grid-pol small" style="left: 48.148148148148145%"></span><span class="irs-grid-pol" style="left: 55.55555555555556%"></span><span class="irs-grid-text js-grid-text-5" style="left: 55.5556%; visibility: visible; margin-left: -3.50522%;">600</span><span class="irs-grid-pol small" style="left: 62.962962962962955%"></span><span class="irs-grid-pol small" style="left: 59.25925925925926%"></span><span class="irs-grid-pol" style="left: 66.66666666666666%"></span><span class="irs-grid-text js-grid-text-6" style="left: 66.6667%; visibility: visible; margin-left: -3.50522%;">700</span><span class="irs-grid-pol small" style="left: 74.07407407407406%"></span><span class="irs-grid-pol small" style="left: 70.37037037037037%"></span><span class="irs-grid-pol" style="left: 77.77777777777777%"></span><span class="irs-grid-text js-grid-text-7" style="left: 77.7778%; visibility: visible; margin-left: -3.50522%;">800</span><span class="irs-grid-pol small" style="left: 85.18518518518518%"></span><span class="irs-grid-pol small" style="left: 81.48148148148148%"></span><span class="irs-grid-pol" style="left: 88.88888888888889%"></span><span class="irs-grid-text js-grid-text-8" style="left: 88.8889%; margin-left: -3.50522%;">900</span><span class="irs-grid-pol small" style="left: 96.29629629629629%"></span><span class="irs-grid-pol small" style="left: 92.5925925925926%"></span><span class="irs-grid-pol" style="left: 100%"></span><span class="irs-grid-text js-grid-text-9" style="left: 100%; visibility: visible; margin-left: -4.75522%;">1,000</span></span><span class="irs-bar" style="left: 3.66667%; width: 10.2963%;"></span><span class="irs-bar-edge"></span><span class="irs-shadow shadow-single" style="display: none;"></span><span class="irs-slider single" style="left: 10.2963%;"></span></span><input class="js-range-slider irs-hidden-input shiny-bound-input" id="brush_delay" data-min="100" data-max="1000" data-from="200" data-step="100" data-grid="true" data-grid-num="9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number" tabindex="-1" readonly="">
+          </div>
+          <div class="form-group shiny-input-container">
+            <div class="checkbox">
+              <label>
+                <input id="brush_reset" type="checkbox" class="shiny-bound-input">
+                <span>Reset on new image</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div id="plotui" class="shiny-html-output shiny-bound-output"><div id="plot" class="shiny-plot-output shiny-bound-output crosshair" style="width: 100% ; height: 300px" data-click-id="plot_click" data-click-clip="TRUE" data-dblclick-id="plot_dblclick" data-dblclick-clip="TRUE" data-dblclick-delay="400" data-hover-id="plot_hover" data-hover-delay="200" data-hover-delay-type="debounce" data-hover-clip="TRUE" data-hover-null-outside="TRUE" data-brush-id="plot_brush" data-brush-fill="#9cf" data-brush-stroke="#036" data-brush-opacity="0.25" data-brush-delay="200" data-brush-delay-type="debounce" data-brush-clip="TRUE" data-brush-direction="xy" data-brush-reset-on-new="FALSE"><img src="data:image/png;base64,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" width="642" height="300" style="-webkit-user-drag: none;"></div></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9">
+        <div class="well">
+          <div class="option-group">
+            <div class="option-header">nearPoints() options</div>
+            <div class="shiny-flow-layout">
+              <div>
+                <div class="form-group shiny-input-container">
+                  <label class="control-label" for="max_distance">Max distance (pixels)</label>
+                  <span class="irs js-irs-3 irs-with-grid"><span class="irs"><span class="irs-line" tabindex="0"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: visible;">1</span><span class="irs-max" style="visibility: visible;">20</span><span class="irs-from" style="visibility: hidden;">0</span><span class="irs-to" style="visibility: hidden;">0</span><span class="irs-single" style="left: 21.1997%;">5</span></span><span class="irs-grid" style="width: 89.4231%; left: 5.18846%;"><span class="irs-grid-pol" style="left: 0%"></span><span class="irs-grid-text js-grid-text-0" style="left: 0%; margin-left: -2.64798%;">1</span><span class="irs-grid-pol small" style="left: 7.017543859649123%"></span><span class="irs-grid-pol small" style="left: 3.5087719298245617%"></span><span class="irs-grid-pol" style="left: 10.526315789473685%"></span><span class="irs-grid-text js-grid-text-1" style="left: 10.5263%; visibility: visible; margin-left: -2.64798%;">3</span><span class="irs-grid-pol small" style="left: 17.54385964912281%"></span><span class="irs-grid-pol small" style="left: 14.035087719298247%"></span><span class="irs-grid-pol" style="left: 21.05263157894737%"></span><span class="irs-grid-text js-grid-text-2" style="left: 21.0526%; visibility: visible; margin-left: -2.64798%;">5</span><span class="irs-grid-pol small" style="left: 28.070175438596493%"></span><span class="irs-grid-pol small" style="left: 24.56140350877193%"></span><span class="irs-grid-pol" style="left: 31.578947368421055%"></span><span class="irs-grid-text js-grid-text-3" style="left: 31.5789%; visibility: visible; margin-left: -2.64798%;">7</span><span class="irs-grid-pol small" style="left: 38.59649122807018%"></span><span class="irs-grid-pol small" style="left: 35.08771929824562%"></span><span class="irs-grid-pol" style="left: 42.10526315789474%"></span><span class="irs-grid-text js-grid-text-4" style="left: 42.1053%; margin-left: -2.64798%;">9</span><span class="irs-grid-pol small" style="left: 49.12280701754386%"></span><span class="irs-grid-pol small" style="left: 45.6140350877193%"></span><span class="irs-grid-pol" style="left: 52.631578947368425%"></span><span class="irs-grid-text js-grid-text-5" style="left: 52.6316%; visibility: visible; margin-left: -3.68841%;">11</span><span class="irs-grid-pol small" style="left: 59.64912280701755%"></span><span class="irs-grid-pol small" style="left: 56.140350877192986%"></span><span class="irs-grid-pol" style="left: 63.15789473684211%"></span><span class="irs-grid-text js-grid-text-6" style="left: 63.1579%; visibility: visible; margin-left: -3.8499%;">13</span><span class="irs-grid-pol small" style="left: 70.17543859649123%"></span><span class="irs-grid-pol small" style="left: 66.66666666666667%"></span><span class="irs-grid-pol" style="left: 73.6842105263158%"></span><span class="irs-grid-text js-grid-text-7" style="left: 73.6842%; visibility: visible; margin-left: -3.8499%;">15</span><span class="irs-grid-pol small" style="left: 80.70175438596492%"></span><span class="irs-grid-pol small" style="left: 77.19298245614036%"></span><span class="irs-grid-pol" style="left: 84.21052631578948%"></span><span class="irs-grid-text js-grid-text-8" style="left: 84.2105%; margin-left: -3.8499%;">17</span><span class="irs-grid-pol small" style="left: 91.2280701754386%"></span><span class="irs-grid-pol small" style="left: 87.71929824561404%"></span><span class="irs-grid-pol" style="left: 94.73684210526316%"></span><span class="irs-grid-text js-grid-text-9" style="left: 94.7368%; visibility: visible; margin-left: -3.8499%;">19</span><span class="irs-grid-pol small" style="left: 98.24561403508773%"></span><span class="irs-grid-pol small" style="left: 96.49122807017544%"></span><span class="irs-grid-pol" style="left: 100%"></span><span class="irs-grid-text js-grid-text-10" style="left: 100%; visibility: visible; margin-left: -3.8499%;">20</span></span><span class="irs-bar" style="left: 5.28846%; width: 18.8259%;"></span><span class="irs-bar-edge"></span><span class="irs-shadow shadow-single" style="display: none;"></span><span class="irs-slider single" style="left: 18.8259%;"></span></span><input class="js-range-slider irs-hidden-input shiny-bound-input" id="max_distance" data-min="1" data-max="20" data-from="5" data-step="1" data-grid="true" data-grid-num="9.5" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number" tabindex="-1" readonly="">
+                </div>
+              </div>
+              <div>
+                <div class="form-group shiny-input-container">
+                  <label class="control-label" for="max_points">Max number of rows to select</label>
+                  <span class="irs js-irs-4 irs-with-grid"><span class="irs"><span class="irs-line" tabindex="0"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: visible;">1</span><span class="irs-max" style="visibility: hidden;">100</span><span class="irs-from" style="visibility: hidden;">0</span><span class="irs-to" style="visibility: hidden;">0</span><span class="irs-single" style="left: 88.8559%;">100</span></span><span class="irs-grid" style="width: 89.4231%; left: 5.18846%;"><span class="irs-grid-pol" style="left: 0%"></span><span class="irs-grid-text js-grid-text-0" style="left: 0%; margin-left: -2.64798%;">1</span><span class="irs-grid-pol small" style="left: 6.7340067340067336%"></span><span class="irs-grid-pol small" style="left: 3.3670033670033668%"></span><span class="irs-grid-pol" style="left: 10.1010101010101%"></span><span class="irs-grid-text js-grid-text-1" style="left: 10.101%; visibility: visible; margin-left: -3.68841%;">11</span><span class="irs-grid-pol small" style="left: 16.835016835016834%"></span><span class="irs-grid-pol small" style="left: 13.468013468013467%"></span><span class="irs-grid-pol" style="left: 20.2020202020202%"></span><span class="irs-grid-text js-grid-text-2" style="left: 20.202%; visibility: visible; margin-left: -3.8499%;">21</span><span class="irs-grid-pol small" style="left: 26.936026936026934%"></span><span class="irs-grid-pol small" style="left: 23.569023569023567%"></span><span class="irs-grid-pol" style="left: 30.3030303030303%"></span><span class="irs-grid-text js-grid-text-3" style="left: 30.303%; visibility: visible; margin-left: -3.8499%;">31</span><span class="irs-grid-pol small" style="left: 37.03703703703704%"></span><span class="irs-grid-pol small" style="left: 33.67003367003367%"></span><span class="irs-grid-pol" style="left: 40.4040404040404%"></span><span class="irs-grid-text js-grid-text-4" style="left: 40.404%; margin-left: -3.8499%;">41</span><span class="irs-grid-pol small" style="left: 47.138047138047135%"></span><span class="irs-grid-pol small" style="left: 43.77104377104377%"></span><span class="irs-grid-pol" style="left: 50.505050505050505%"></span><span class="irs-grid-text js-grid-text-5" style="left: 50.5051%; visibility: visible; margin-left: -3.8499%;">51</span><span class="irs-grid-pol small" style="left: 57.23905723905724%"></span><span class="irs-grid-pol small" style="left: 53.87205387205387%"></span><span class="irs-grid-pol" style="left: 60.6060606060606%"></span><span class="irs-grid-text js-grid-text-6" style="left: 60.6061%; visibility: visible; margin-left: -3.8499%;">61</span><span class="irs-grid-pol small" style="left: 67.34006734006734%"></span><span class="irs-grid-pol small" style="left: 63.973063973063965%"></span><span class="irs-grid-pol" style="left: 70.7070707070707%"></span><span class="irs-grid-text js-grid-text-7" style="left: 70.7071%; visibility: visible; margin-left: -3.8499%;">71</span><span class="irs-grid-pol small" style="left: 77.44107744107744%"></span><span class="irs-grid-pol small" style="left: 74.07407407407406%"></span><span class="irs-grid-pol" style="left: 80.8080808080808%"></span><span class="irs-grid-text js-grid-text-8" style="left: 80.8081%; margin-left: -3.8499%;">81</span><span class="irs-grid-pol small" style="left: 87.54208754208754%"></span><span class="irs-grid-pol small" style="left: 84.17508417508417%"></span><span class="irs-grid-pol" style="left: 90.9090909090909%"></span><span class="irs-grid-text js-grid-text-9" style="left: 90.9091%; visibility: visible; margin-left: -3.8499%;">91</span><span class="irs-grid-pol small" style="left: 96.96969696969697%"></span><span class="irs-grid-pol small" style="left: 93.93939393939394%"></span><span class="irs-grid-pol" style="left: 100%"></span><span class="irs-grid-text js-grid-text-10" style="left: 100%; visibility: visible; margin-left: -5.0556%;">100</span></span><span class="irs-bar" style="left: 5.28846%; width: 89.4231%;"></span><span class="irs-bar-edge"></span><span class="irs-shadow shadow-single" style="display: none;"></span><span class="irs-slider single" style="left: 89.4231%;"></span></span><input class="js-range-slider irs-hidden-input shiny-bound-input" id="max_points" data-min="1" data-max="100" data-from="100" data-step="1" data-grid="true" data-grid-num="9.9" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number" tabindex="-1" readonly="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <h4>Points selected by clicking, with nearPoints():</h4>
+          <div id="plot_clicked_points" style="width:100%; height:auto; " class="datatables html-widget html-widget-output shiny-bound-output"><div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="DataTables_Table_1_length"><label>Show <select name="DataTables_Table_1_length" aria-controls="DataTables_Table_1" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="DataTables_Table_1_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="DataTables_Table_1"></label></div><div id="DataTables_Table_1_processing" class="dataTables_processing" style="display: none;">Processing...</div><table class="display dataTable no-footer" id="DataTables_Table_1" role="grid" aria-describedby="DataTables_Table_1_info">
+  <thead>
+    <tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" aria-label=" "> </th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="mpg: activate to sort column ascending">mpg</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="cyl: activate to sort column ascending">cyl</th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="wt: activate to sort column ascending">wt</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="am: activate to sort column ascending">am</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="date: activate to sort column ascending">date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="datetime: activate to sort column ascending">datetime</th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="dist_: activate to sort column ascending">dist_</th></tr>
+  </thead>
+<tbody><tr class="odd"><td valign="top" colspan="8" class="dataTables_empty">No data available in table</td></tr></tbody></table><div class="dataTables_info" id="DataTables_Table_1_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_1_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_1" data-dt-idx="0" tabindex="0" id="DataTables_Table_1_previous">Previous</a><span></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_1" data-dt-idx="1" tabindex="0" id="DataTables_Table_1_next">Next</a></div></div></div>
+        </div>
+        <div class="well" width="9">
+          <h4>Points selected by brushing, with brushedPoints():</h4>
+          <div id="plot_brushed_points" style="width:100%; height:auto; " class="datatables html-widget html-widget-output shiny-bound-output"><div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="DataTables_Table_0"></label></div><div id="DataTables_Table_0_processing" class="dataTables_processing" style="display: none;">Processing...</div><table class="display dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+  <thead>
+    <tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" aria-label=" "> </th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="mpg: activate to sort column ascending">mpg</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="cyl: activate to sort column ascending">cyl</th><th class="dt-right sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="wt: activate to sort column ascending">wt</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="am: activate to sort column ascending">am</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="date: activate to sort column ascending">date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="datetime: activate to sort column ascending">datetime</th></tr>
+  </thead>
+<tbody><tr class="odd"><td valign="top" colspan="7" class="dataTables_empty">No data available in table</td></tr></tbody></table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</body></html>
